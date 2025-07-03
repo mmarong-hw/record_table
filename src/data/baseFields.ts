@@ -26,19 +26,4 @@ export const baseFields: Field[] = [
   { type: "date", label: "registeredAt", required: true },
   { type: "select", label: "job", required: false, items: ["개발자", "PO", "디자이너"] },
   { type: "checkbox", label: "emailAgreed", required: false },
-] as const;
-
-export type LabelUnion = typeof baseFields[number]["label"];
-
-type FieldValueType<F> =
-  F extends { type: "text" | "textarea" } ? string :
-  F extends { type: "date" } ? Date :
-  F extends { type: "select", items: readonly (infer I)[] } ? I :
-  F extends { type: "checkbox" } ? boolean :
-  never;
-
-type BaseField = typeof baseFields[number];
-
-export type FieldValueMap = {
-  [F in BaseField as F["label"]]: FieldValueType<F>
-};
+];

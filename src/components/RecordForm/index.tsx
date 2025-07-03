@@ -1,13 +1,15 @@
 import { Form, type FormInstance } from "antd";
-import { baseFields, type FieldValueMap } from "../../data/baseFields";
+import { baseFields } from "../../data/baseFields";
 import { BaseFormItem } from "./BaseFormItem";
+import type { FormValueType } from "./formValueType";
+import { memo } from "react";
 
 interface Props<T> {
   form: FormInstance<T>;
   initialValues?: T;
 }
 
-export function RecordForm<T extends FieldValueMap>({ form, initialValues }: Props<T>) {
+function RecordFormOrig<T extends FormValueType>({ form, initialValues }: Props<T>) {
 
   return (
     <Form form={form} layout="vertical" initialValues={initialValues}>
@@ -17,3 +19,5 @@ export function RecordForm<T extends FieldValueMap>({ form, initialValues }: Pro
     </Form>
   );
 }
+
+export const RecordForm = memo(RecordFormOrig);

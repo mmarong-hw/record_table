@@ -1,17 +1,19 @@
 import { Modal, Form } from "antd";
 import { RecordForm } from "../RecordForm";
-import { baseFields, type FieldValueMap } from "../../data/baseFields";
-import { useMemo } from "react";
+import { baseFields } from "../../data/baseFields";
+import { useEffect, useMemo } from "react";
+import type { FormValueType } from "../RecordForm/formValueType";
+import type { Dayjs } from "dayjs";
 
 interface Props {
-  initialValues: FieldValueMap;
   open: boolean;
+  type: "create" | "edit";
   onClose: () => void;
-  onSubmit: (values: any) => void;
+  onSubmit?: (values: any) => void;
 }
 
-export function EditRecordModal({ initialValues, open, onClose, onSubmit }: Props) {
-  const [form] = Form.useForm<FieldValueMap>();
+export function CreateOrEditRecordModal({ open, onClose, onSubmit }: Props) {
+  const [form] = Form.useForm<FormValueType>();
   const formValues = Form.useWatch([], form);
 
   const disabled = useMemo(() => {
@@ -28,7 +30,8 @@ export function EditRecordModal({ initialValues, open, onClose, onSubmit }: Prop
 
   const handleOk = async () => {
     const values = await form.validateFields();
-    onSubmit(values);
+    const registeredAt = (values.registeredAt as Dayjs).format("YYYY-MM-DD");
+    onSubmit?.({ ...values, registeredAt });
     form.resetFields();
   };
 
@@ -41,14 +44,14 @@ export function EditRecordModal({ initialValues, open, onClose, onSubmit }: Prop
         onClose();
       }}
       onOk={handleOk}
-      okText="수정"
+      okText="추가"
       cancelText="취소"
-      title="회원 수정"
+      title="회원 추가"
       okButtonProps={{
         disabled,
       }}
     >
-      <RecordForm form={form} initialValues={initialValues} />
+      <RecordForm form={form} />
     </Modal>
   );
 }

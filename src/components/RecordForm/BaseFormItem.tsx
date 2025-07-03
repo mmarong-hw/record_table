@@ -1,13 +1,13 @@
 import { Checkbox, DatePicker, Form, Input, Select } from "antd";
 import type { Rule } from "antd/es/form";
 import type { ComponentProps } from "react";
-import { baseFields, labelToKorean, type LabelUnion } from "../../data/baseFields.ts";
+import { baseFields, labelToKorean } from "../../data/baseFields.ts";
 import type { Field } from "../../types/field.ts";
 
 const { TextArea } = Input;
 
 interface Props extends Omit<ComponentProps<typeof Form.Item>, "name" | "label" | "rules"> {
-  label: LabelUnion;
+  label: string;
 }
 
 export function BaseFormItem({ label, ...rest }: Props) {
