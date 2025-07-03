@@ -54,3 +54,30 @@
   width: 22px;
   height: 22px;
 }
+
+.custom-table-cell.custom-table-cell.ant-table-cell {
+  padding: 8px 13px;
+}
+
+.custom-table-cell .ant-checkbox-inner {
+  background: #fff;
+  border-radius: 6px;
+}
+
+.custom-table-cell .ant-checkbox-checked .ant-checkbox-inner {
+  background: #4A7CFE;
+  border-color: #4A7CFE;
+}
+
+.custom-table-cell .ant-checkbox-checked .ant-checkbox-inner::after {
+  border-color: #fff;
+}
+
+.custom-dropdown.custom-dropdown .ant-dropdown-menu .ant-dropdown-menu-item {
+  padding: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.custom-dropdown.custom-dropdown .ant-dropdown-menu .ant-dropdown-menu-item:last-child {
+  border-bottom: 0;
+}
