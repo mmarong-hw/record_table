@@ -1,0 +1,17 @@
+.filterDropdownItem {
+  align-items: center;
+  height: 32px;
+  white-space: nowrap;
+  padding: 8px 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.filterDropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  width: 150px;
+  border-radius: 6px;
+}

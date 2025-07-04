@@ -7,6 +7,7 @@ import { DropdownItem } from "../DropdownItem";
 import { MoreOutlined } from "@ant-design/icons";
 import { Divider } from "../../Divider";
 import { useRecordContext } from "../../Provider/RecordProvider";
+import styles from "./useRecordTable.module.css"
 
 export interface TableData {
   key: string;
@@ -61,11 +62,36 @@ function makeFilters(tableData: TableData[], key: Label) {
 
 function makeColumns(tableData: TableData[]): ColumnType<TableData>[] {
   return baseFields.map((field) => {
+    const filters = makeFilters(tableData, field.label);
     const commonColumn = {
       title: labelToKorean(field.label),
       dataIndex: field.label,
       key: field.label,
-      filters: makeFilters(tableData, field.label),
+      filters,
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm
+      }: {
+        setSelectedKeys: (keys: React.Key[]) => void,
+        selectedKeys: React.Key[],
+        confirm: () => void
+      }) => (
+        <Checkbox.Group
+          className={styles.filterDropdown}
+          value={selectedKeys}
+          onChange={(vals) => {
+            setSelectedKeys(vals);
+            confirm(); // 즉시 필터 적용
+          }}
+        >
+          {filters.map(({ text, value }) => (
+            <Checkbox key={text.toString()} className={styles.filterDropdownItem} value={value}>
+              {text}
+            </Checkbox>
+          ))}
+        </Checkbox.Group>
+      ),
       onFilter: (value: boolean | React.Key, record: TableData) => {
         if (typeof value === "string" && field.label !== "emailAgreed") {
           return record[field.label].includes(value);
