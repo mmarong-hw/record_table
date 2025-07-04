@@ -1,0 +1,22 @@
+.dropdownItemList {
+  display: block;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdownItem {
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  text-align: left;
+  white-space: nowrap;
+  width: 173px;
+  padding: 5px 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.textColorRed {
+  color: #FF4D4F;
+}

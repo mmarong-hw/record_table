@@ -7,5 +7,11 @@ interface Props {
 }
 
 export function DropdownItem({ children, textColor = "default" }: Props) {
-  return <button className={cx(styles.clearButton, styles.dropdownItem, textColor === "red" && styles.textColorRed)}>{children}</button>;
+  return (
+    <li className={styles.dropdownItemList}>
+      <button className={cx(styles.dropdownItem, textColor === "red" && styles.textColorRed)} type="button">
+        {children}
+      </button>
+    </li>
+  );
 }
