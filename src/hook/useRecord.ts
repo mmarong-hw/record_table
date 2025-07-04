@@ -1,33 +1,21 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import type { FormValueType } from "../components/RecordForm/formValueType";
 import dayjs, { isDayjs } from "dayjs";
 import type { Label } from "../field/baseFields";
+import { StorageRecordContext } from "../components/Provider/StorageRecordProvider";
+import { storage } from "../localStorage/localStorage";
 
 export type RecordDataType = Record<Label, string | boolean>;
 
-const dummyRecords = [
-  {
-    key: "1",
-    name: "John Doe",
-    address: "서울 강남구",
-    memo: "외국인",
-    registeredAt: "2024-10-02",
-    job: "개발자",
-    emailAgreed: true,
-  },
-  {
-    key: "2",
-    name: "Foo Bar",
-    address: "서울 서초구",
-    memo: "한국인",
-    registeredAt: "2024-10-01",
-    job: "PO",
-    emailAgreed: false,
-  },
-];
-
 export function useRecords() {
-  const [records, setRecords] = useState<RecordDataType[]>(dummyRecords);
+  const defaultRecords = useContext(StorageRecordContext)
+  const [records, setRecords] = useState<RecordDataType[]>(defaultRecords);
+
+  useEffect(() => {
+    if (STORAGE === "storage") {
+      storage.set(records);
+    }
+  }, [records]);
 
   const addRecord = (form: FormValueType) => {
     setRecords(prev => [...prev, formToRecord(form)]);

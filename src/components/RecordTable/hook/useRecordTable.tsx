@@ -20,11 +20,7 @@ export interface TableData {
 function isTableData(data: RecordDataType): data is TableData {
   return (
     "name" in data &&
-    "address" in data &&
-    "memo" in data &&
-    "registeredAt" in data &&
-    "job" in data &&
-    "emailAgreed" in data
+    "address" in data
   );
 }
 
