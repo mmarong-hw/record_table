@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { FormValueType } from "../components/RecordForm/formValueType";
-import { Dayjs } from "dayjs";
+import { isDayjs } from "dayjs";
 import type { Label } from "../field/baseFields";
 
 export type RecordDataType = Record<Label, string | boolean>;
@@ -48,7 +48,7 @@ function FormToRecord(form: FormValueType): RecordDataType {
   return Object.fromEntries(
     Object.entries(form).map(([key, value]) => [
       key,
-      value instanceof Dayjs ? value.format("YYYY-MM-DD") : value
+      isDayjs(value) ? value.format("YYYY-MM-DD") : value
     ])
   ) as RecordDataType;
 }
