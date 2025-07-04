@@ -1,5 +1,5 @@
 import { Form, type FormInstance } from "antd";
-import { baseFields } from "../../data/baseFields";
+import { baseFields } from "../../field/baseFields";
 import { BaseFormItem } from "./BaseFormItem";
 import type { FormValueType } from "./formValueType";
 import { memo } from "react";

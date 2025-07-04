@@ -1,7 +1,7 @@
 import { Modal, Form } from "antd";
 import { RecordForm } from "../RecordForm";
-import { baseFields } from "../../data/baseFields";
-import { useEffect, useMemo } from "react";
+import { baseFields } from "../../field/baseFields";
+import { useMemo } from "react";
 import type { FormValueType } from "../RecordForm/formValueType";
 import type { Dayjs } from "dayjs";
 

@@ -29,7 +29,3 @@ export type Field = TextField |
   DateField |
   SelectField |
   CheckboxField;
-
-  export type FieldWithLabel = Field & {
-    label: string;
-  }
