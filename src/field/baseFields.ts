@@ -1,4 +1,10 @@
-import type { CheckboxField, DateField, SelectField, TextField, TextareaField } from "./types.ts";
+import type {
+  CheckboxField,
+  DateField,
+  SelectField,
+  TextField,
+  TextareaField,
+} from "./types.ts";
 interface NameField extends TextField {
   type: "text";
   label: "name";
@@ -53,7 +59,7 @@ export const labelToKorean = (label: Label) => {
     default:
       return label;
   }
-}
+};
 
 type BaseFields = [
   NameField,
@@ -69,7 +75,12 @@ export const baseFields: BaseFields = [
   { type: "text", label: "address", required: false },
   { type: "textarea", label: "memo", required: false },
   { type: "date", label: "registeredAt", required: true },
-  { type: "select", label: "job", required: false, items: ["개발자", "PO", "디자이너"] },
+  {
+    type: "select",
+    label: "job",
+    required: false,
+    items: ["개발자", "PO", "디자이너"],
+  },
   { type: "checkbox", label: "emailAgreed", required: false },
 ];
 

@@ -7,10 +7,21 @@ interface Props {
   onClick?: () => void;
 }
 
-export function DropdownItem({ children, textColor = "default", onClick }: Props) {
+export function DropdownItem({
+  children,
+  textColor = "default",
+  onClick,
+}: Props) {
   return (
     <li className={styles.dropdownItemList}>
-      <button className={cx(styles.dropdownItem, textColor === "red" && styles.textColorRed)} type="button" onClick={onClick}>
+      <button
+        className={cx(
+          styles.dropdownItem,
+          textColor === "red" && styles.textColorRed,
+        )}
+        type="button"
+        onClick={onClick}
+      >
         {children}
       </button>
     </li>

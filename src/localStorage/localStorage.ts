@@ -44,7 +44,9 @@ export class LocalStorage<T> {
 }
 
 export const localStorageKeys = {
-  RECORD: 'record',
+  RECORD: "record",
 } as const;
 
-export const storage = new LocalStorage<RecordDataType[]>(localStorageKeys.RECORD);
+export const storage = new LocalStorage<RecordDataType[]>(
+  localStorageKeys.RECORD,
+);

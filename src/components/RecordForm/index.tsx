@@ -9,11 +9,13 @@ interface Props<T> {
   initialValues?: T;
 }
 
-function RecordFormOrig<T extends FormValueType>({ form, initialValues }: Props<T>) {
-
+function RecordFormOrig<T extends FormValueType>({
+  form,
+  initialValues,
+}: Props<T>) {
   return (
     <Form form={form} layout="vertical" initialValues={initialValues}>
-      {baseFields.map((field) => (
+      {baseFields.map(field => (
         <BaseFormItem key={field.label} label={field.label} />
       ))}
     </Form>

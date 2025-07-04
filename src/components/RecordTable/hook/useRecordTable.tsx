@@ -1,4 +1,8 @@
-import { baseFields, labelToKorean, type Label } from "../../../field/baseFields";
+import {
+  baseFields,
+  labelToKorean,
+  type Label,
+} from "../../../field/baseFields";
 import type { ColumnType } from "antd/es/table";
 import { type RecordDataType } from "../../../hook/useRecord";
 import { Checkbox } from "antd";
@@ -18,28 +22,30 @@ export interface TableData {
 }
 
 function isTableData(data: RecordDataType): data is TableData {
-  return (
-    "name" in data &&
-    "address" in data
-  );
+  return "name" in data && "address" in data;
 }
 
 function makeTableData(records: RecordDataType[]): TableData[] {
-  return records.map((record, index) => {
-    const tableData = baseFields.reduce((prev, cur) => {
-      prev[cur.label] = record[cur.label] ?? "";
-      return prev;
-    }, {} as Record<Label, string | boolean>);
+  return records
+    .map((record, index) => {
+      const tableData = baseFields.reduce(
+        (prev, cur) => {
+          prev[cur.label] = record[cur.label] ?? "";
+          return prev;
+        },
+        {} as Record<Label, string | boolean>,
+      );
 
-    return {
-      key: index.toString(),
-      ...tableData,
-    };
-  }).filter(isTableData);
+      return {
+        key: index.toString(),
+        ...tableData,
+      };
+    })
+    .filter(isTableData);
 }
 
 function makeFilters(tableData: TableData[], key: Label) {
-  return tableData.map((data) => {
+  return tableData.map(data => {
     const value = data[key];
     if (key === "emailAgreed") {
       return {
@@ -55,14 +61,19 @@ function makeFilters(tableData: TableData[], key: Label) {
 }
 
 function makeColumns(tableData: TableData[]): ColumnType<TableData>[] {
-  return baseFields.map((field) => {
+  return baseFields.map(field => {
     const filters = makeFilters(tableData, field.label);
     const commonColumn = {
       title: labelToKorean(field.label),
       dataIndex: field.label,
       key: field.label,
       filters,
-      filterDropdown: ({ selectedKeys, filters, setSelectedKeys, confirm }: FilterDropdownProps) => (
+      filterDropdown: ({
+        selectedKeys,
+        filters,
+        setSelectedKeys,
+        confirm,
+      }: FilterDropdownProps) => (
         <CheckboxGroup
           selectedKeys={selectedKeys}
           filters={filters}
@@ -96,10 +107,10 @@ function makeColumns(tableData: TableData[]): ColumnType<TableData>[] {
 
 const makeDropdownColumn = ({
   onEdit,
-  onDelete
+  onDelete,
 }: {
-  onEdit: (record: TableData) => void,
-  onDelete: (record: TableData) => void
+  onEdit: (record: TableData) => void;
+  onDelete: (record: TableData) => void;
 }): ColumnType<TableData> => {
   return {
     key: "action",
@@ -115,15 +126,15 @@ const makeDropdownColumn = ({
         />
       );
     },
-  }
+  };
 };
 
 export function useRecordTable({
   onEdit,
-  onDelete
+  onDelete,
 }: {
-  onEdit?: (record: TableData) => void,
-  onDelete?: (record: TableData) => void
+  onEdit?: (record: TableData) => void;
+  onDelete?: (record: TableData) => void;
 }) {
   const { records, removeRecord } = useRecordContext();
 
@@ -131,15 +142,17 @@ export function useRecordTable({
 
   const columns = makeColumns(tableData);
 
-  columns.push(makeDropdownColumn({
-    onEdit: (record: TableData) => {
-      onEdit?.(record);
-    },
-    onDelete: (record: TableData) => {
-      removeRecord(Number(record.key));
-      onDelete?.(record);
-    },
-  }));
+  columns.push(
+    makeDropdownColumn({
+      onEdit: (record: TableData) => {
+        onEdit?.(record);
+      },
+      onDelete: (record: TableData) => {
+        removeRecord(Number(record.key));
+        onDelete?.(record);
+      },
+    }),
+  );
 
   return { columns, tableData };
 }

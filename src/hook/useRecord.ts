@@ -8,7 +8,7 @@ import { storage } from "../localStorage/localStorage";
 export type RecordDataType = Record<Label, string | boolean>;
 
 export function useRecords() {
-  const defaultRecords = useContext(StorageRecordContext)
+  const defaultRecords = useContext(StorageRecordContext);
   const [records, setRecords] = useState<RecordDataType[]>(defaultRecords);
 
   useEffect(() => {
@@ -19,15 +19,17 @@ export function useRecords() {
 
   const addRecord = (form: FormValueType) => {
     setRecords(prev => [...prev, formToRecord(form)]);
-  }
+  };
 
   const removeRecord = (index: number) => {
     setRecords(prev => prev.filter((_, i) => i !== index));
-  }
+  };
 
   const updateRecord = (index: number, form: FormValueType) => {
-    setRecords(prev => prev.map((record, i) => i === index ? formToRecord(form) : record));
-  }
+    setRecords(prev =>
+      prev.map((record, i) => (i === index ? formToRecord(form) : record)),
+    );
+  };
 
   return { records, addRecord, removeRecord, updateRecord };
 }
@@ -36,8 +38,8 @@ function formToRecord(form: FormValueType): RecordDataType {
   return Object.fromEntries(
     Object.entries(form).map(([key, value]) => [
       key,
-      isDayjs(value) ? value.format("YYYY-MM-DD") : value
-    ])
+      isDayjs(value) ? value.format("YYYY-MM-DD") : value,
+    ]),
   ) as RecordDataType;
 }
 
@@ -45,7 +47,7 @@ export function recordToForm(record: RecordDataType): FormValueType {
   return Object.fromEntries(
     Object.entries(record).map(([key, value]) => [
       key,
-      key === "registeredAt" ? dayjs(value as string) : value
-    ])
+      key === "registeredAt" ? dayjs(value as string) : value,
+    ]),
   ) as FormValueType;
 }

@@ -17,7 +17,9 @@ export const RecordProvider = ({ children }: { children: ReactNode }) => {
   const { records, addRecord, removeRecord, updateRecord } = useRecords();
 
   return (
-    <RecordContext.Provider value={{ records, addRecord, removeRecord, updateRecord }}>
+    <RecordContext.Provider
+      value={{ records, addRecord, removeRecord, updateRecord }}
+    >
       {children}
     </RecordContext.Provider>
   );

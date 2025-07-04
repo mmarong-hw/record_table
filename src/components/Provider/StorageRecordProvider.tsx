@@ -9,6 +9,9 @@ interface Props {
 }
 
 export function StorageRecordProvider({ children, data }: Props) {
-
-  return <StorageRecordContext.Provider value={data}>{children}</StorageRecordContext.Provider>;
+  return (
+    <StorageRecordContext.Provider value={data}>
+      {children}
+    </StorageRecordContext.Provider>
+  );
 }

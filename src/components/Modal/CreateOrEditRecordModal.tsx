@@ -13,7 +13,12 @@ export interface Props {
   onSubmit?: (values: FormValueType) => void;
 }
 
-export function CreateOrEditRecordModal({ initialValues, open, onClose, onSubmit }: Props) {
+export function CreateOrEditRecordModal({
+  initialValues,
+  open,
+  onClose,
+  onSubmit,
+}: Props) {
   const [form] = Form.useForm<FormValueType>();
   const formValues = Form.useWatch([], form);
 
@@ -22,11 +27,15 @@ export function CreateOrEditRecordModal({ initialValues, open, onClose, onSubmit
       const requiredFieldValues = baseFields
         .filter(field => field.required)
         .map(field => formValues[field.label]);
-      const hasEmptyRequired = requiredFieldValues.filter(v => v === undefined).length > 0;
-      return form.getFieldsError().some((field) => field.errors.length > 0) || hasEmptyRequired;
+      const hasEmptyRequired =
+        requiredFieldValues.filter(v => v === undefined).length > 0;
+      return (
+        form.getFieldsError().some(field => field.errors.length > 0) ||
+        hasEmptyRequired
+      );
     }
 
-    return true; 
+    return true;
   }, [formValues]);
 
   const handleOk = async () => {

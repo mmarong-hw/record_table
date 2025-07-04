@@ -1,17 +1,22 @@
 import { Checkbox, DatePicker, Form, Input, Select } from "antd";
 import type { Rule } from "antd/es/form";
 import type { ComponentProps } from "react";
-import { baseFields, labelToKorean, type Label } from "../../field/baseFields.ts";
+import {
+  baseFields,
+  labelToKorean,
+  type Label,
+} from "../../field/baseFields.ts";
 import type { Field } from "../../field/types.ts";
 
 const { TextArea } = Input;
 
-interface Props extends Omit<ComponentProps<typeof Form.Item>, "name" | "label" | "rules"> {
+interface Props
+  extends Omit<ComponentProps<typeof Form.Item>, "name" | "label" | "rules"> {
   label: Label;
 }
 
 export function BaseFormItem({ label, ...rest }: Props) {
-  const field = baseFields.find((field) => field.label === label);
+  const field = baseFields.find(field => field.label === label);
 
   if (!field) {
     throw new Error("field 가 없습니다.");
@@ -23,7 +28,7 @@ export function BaseFormItem({ label, ...rest }: Props) {
     name: label,
     rules: makeRules(field),
     className: "custom-form",
-  }
+  };
 
   switch (field?.type) {
     case "text":
@@ -48,8 +53,10 @@ export function BaseFormItem({ label, ...rest }: Props) {
       return (
         <Form.Item {...props}>
           <Select style={{ width: "270px" }}>
-            {field?.items?.map((item) => (
-              <Select.Option key={item} value={item}>{item}</Select.Option>
+            {field?.items?.map(item => (
+              <Select.Option key={item} value={item}>
+                {item}
+              </Select.Option>
             ))}
           </Select>
         </Form.Item>

@@ -24,8 +24,9 @@ export interface CheckboxField extends CommonField {
   type: "checkbox";
 }
 
-export type Field = TextField |
-  TextareaField |
-  DateField |
-  SelectField |
-  CheckboxField;
+export type Field =
+  | TextField
+  | TextareaField
+  | DateField
+  | SelectField
+  | CheckboxField;

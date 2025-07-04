@@ -11,7 +11,7 @@ export function RecordTable() {
   const [initialValues, setInitialValues] = useState<FormValueType>();
   const editRecordIndex = useRef<number>(null);
   const { columns, tableData } = useRecordTable({
-    onEdit: (record) => {
+    onEdit: record => {
       setOpen(true);
       setInitialValues(recordToForm(record));
       editRecordIndex.current = Number(record.key);
@@ -29,14 +29,14 @@ export function RecordTable() {
   const handleClose = () => {
     setInitialValues(undefined);
     setOpen(false);
-  }
+  };
 
   const handleSubmit = (values: FormValueType) => {
     if (editRecordIndex.current !== null) {
       updateRecord(editRecordIndex.current, values);
     }
     setOpen(false);
-  }
+  };
 
   return (
     <>
@@ -45,7 +45,7 @@ export function RecordTable() {
         rowSelection={{}}
         columns={columns.map(column => ({
           ...column,
-          className: 'custom-table-cell',
+          className: "custom-table-cell",
         }))}
         dataSource={tableData}
         pagination={false}
