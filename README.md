@@ -1,7 +1,11 @@
 # React + TypeScript + Vite
 
 ## 실행
+
 ```bash
+  nvm use
+  corepack enable
+  pnpm install
   pnpm dev
 ```
 
