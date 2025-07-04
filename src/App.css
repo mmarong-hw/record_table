@@ -81,3 +81,17 @@
 .custom-dropdown.custom-dropdown .ant-dropdown-menu .ant-dropdown-menu-item:last-child {
   border-bottom: 0;
 }
+
+.ant-table-thead > tr > .ant-table-cell.custom-table-cell,
+.ant-table-thead > tr > .ant-table-cell.ant-table-selection-column {
+  padding: 8px;
+}
+
+.ant-table-tbody > tr > .ant-table-cell.custom-table-cell,
+.ant-table-tbody > tr > .ant-table-cell.ant-table-selection-column {
+  padding: 13px 8px;
+}
+
+.custom-table-cell .ant-table-filter-column > .ant-dropdown-trigger.ant-table-filter-trigger {
+  margin: 0;
+} 

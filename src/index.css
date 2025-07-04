@@ -1,6 +1,4 @@
 :root {
-  font-family: Pretendard, "Apple SD Gothic Neo", "Nanum Gothic",
-    "Malgun Gothic", sans-serif;
   line-height: 1.5;
   font-weight: 400;
 }
@@ -12,4 +10,24 @@ body {
 h1 {
   margin: 0;
   padding: 0;
+}
+
+hr {
+  border: none;
+  margin: 0;
+}
+
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-align: inherit;
+  line-height: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
