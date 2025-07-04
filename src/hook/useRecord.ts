@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { FormValueType } from "../components/RecordForm/formValueType";
-import { isDayjs } from "dayjs";
+import dayjs, { isDayjs } from "dayjs";
 import type { Label } from "../field/baseFields";
 
 export type RecordDataType = Record<Label, string | boolean>;
@@ -30,7 +30,7 @@ export function useRecords() {
   const [records, setRecords] = useState<RecordDataType[]>(dummyRecords);
 
   const addRecord = (form: FormValueType) => {
-    setRecords(prev => [...prev, FormToRecord(form)]);
+    setRecords(prev => [...prev, formToRecord(form)]);
   }
 
   const removeRecord = (index: number) => {
@@ -38,17 +38,26 @@ export function useRecords() {
   }
 
   const updateRecord = (index: number, form: FormValueType) => {
-    setRecords(prev => prev.map((record, i) => i === index ? FormToRecord(form) : record));
+    setRecords(prev => prev.map((record, i) => i === index ? formToRecord(form) : record));
   }
 
   return { records, addRecord, removeRecord, updateRecord };
 }
 
-function FormToRecord(form: FormValueType): RecordDataType {
+function formToRecord(form: FormValueType): RecordDataType {
   return Object.fromEntries(
     Object.entries(form).map(([key, value]) => [
       key,
       isDayjs(value) ? value.format("YYYY-MM-DD") : value
     ])
   ) as RecordDataType;
+}
+
+export function recordToForm(record: RecordDataType): FormValueType {
+  return Object.fromEntries(
+    Object.entries(record).map(([key, value]) => [
+      key,
+      key === "registeredAt" ? dayjs(value as string) : value
+    ])
+  ) as FormValueType;
 }

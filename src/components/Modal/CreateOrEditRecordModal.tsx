@@ -6,13 +6,14 @@ import type { FormValueType } from "../RecordForm/formValueType";
 import type { Dayjs } from "dayjs";
 
 export interface Props {
+  initialValues?: FormValueType;
   open: boolean;
   type: "create" | "edit";
   onClose: () => void;
   onSubmit?: (values: FormValueType) => void;
 }
 
-export function CreateOrEditRecordModal({ open, onClose, onSubmit }: Props) {
+export function CreateOrEditRecordModal({ initialValues, open, onClose, onSubmit }: Props) {
   const [form] = Form.useForm<FormValueType>();
   const formValues = Form.useWatch([], form);
 
@@ -51,7 +52,7 @@ export function CreateOrEditRecordModal({ open, onClose, onSubmit }: Props) {
         disabled,
       }}
     >
-      <RecordForm form={form} />
+      <RecordForm form={form} initialValues={initialValues} />
     </Modal>
   );
 }

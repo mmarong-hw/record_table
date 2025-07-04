@@ -1,13 +1,11 @@
 import { baseFields, labelToKorean, type Label } from "../../../field/baseFields";
 import type { ColumnType } from "antd/es/table";
 import { type RecordDataType } from "../../../hook/useRecord";
-import { Checkbox, Dropdown } from "antd";
-import { DropdownContainer } from "../DropdownContainer";
-import { DropdownItem } from "../DropdownItem";
-import { MoreOutlined } from "@ant-design/icons";
-import { Divider } from "../../Divider";
+import { Checkbox } from "antd";
 import { useRecordContext } from "../../Provider/RecordProvider";
-import styles from "./useRecordTable.module.css"
+import { Dropdown } from "./Dropdown";
+import { CheckboxGroup } from "./CheckboxGroup";
+import type { FilterDropdownProps } from "antd/es/table/interface";
 
 export interface TableData {
   key: string;
@@ -68,29 +66,13 @@ function makeColumns(tableData: TableData[]): ColumnType<TableData>[] {
       dataIndex: field.label,
       key: field.label,
       filters,
-      filterDropdown: ({
-        setSelectedKeys,
-        selectedKeys,
-        confirm
-      }: {
-        setSelectedKeys: (keys: React.Key[]) => void,
-        selectedKeys: React.Key[],
-        confirm: () => void
-      }) => (
-        <Checkbox.Group
-          className={styles.filterDropdown}
-          value={selectedKeys}
-          onChange={(vals) => {
-            setSelectedKeys(vals);
-            confirm(); // 즉시 필터 적용
-          }}
-        >
-          {filters.map(({ text, value }) => (
-            <Checkbox key={text.toString()} className={styles.filterDropdownItem} value={value}>
-              {text}
-            </Checkbox>
-          ))}
-        </Checkbox.Group>
+      filterDropdown: ({ selectedKeys, filters, setSelectedKeys, confirm }: FilterDropdownProps) => (
+        <CheckboxGroup
+          selectedKeys={selectedKeys}
+          filters={filters}
+          setSelectedKeys={setSelectedKeys}
+          confirm={confirm}
+        />
       ),
       onFilter: (value: boolean | React.Key, record: TableData) => {
         if (typeof value === "string" && field.label !== "emailAgreed") {
@@ -128,23 +110,25 @@ const makeDropdownColumn = ({
     render: (_text: string, record: TableData) => {
       return (
         <Dropdown
-          overlay={
-            <DropdownContainer>
-              <DropdownItem onClick={() => onEdit(record)}>수정</DropdownItem>
-              <Divider />
-              <DropdownItem onClick={() => onDelete(record)} textColor="red">삭제</DropdownItem>
-            </DropdownContainer>
-          }
-          trigger={["click"]}
-        >
-          <MoreOutlined />
-        </Dropdown>
+          onEdit={() => {
+            onEdit(record);
+          }}
+          onDelete={() => {
+            onDelete(record);
+          }}
+        />
       );
     },
   }
 };
 
-export function useRecordTable() {
+export function useRecordTable({
+  onEdit,
+  onDelete
+}: {
+  onEdit?: (record: TableData) => void,
+  onDelete?: (record: TableData) => void
+}) {
   const { records, removeRecord } = useRecordContext();
 
   const tableData = makeTableData(records);
@@ -153,10 +137,11 @@ export function useRecordTable() {
 
   columns.push(makeDropdownColumn({
     onEdit: (record: TableData) => {
-      console.log(record);
+      onEdit?.(record);
     },
     onDelete: (record: TableData) => {
       removeRecord(Number(record.key));
+      onDelete?.(record);
     },
   }));
 
