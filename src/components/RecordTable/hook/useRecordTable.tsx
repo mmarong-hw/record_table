@@ -19,12 +19,12 @@ export interface TableData {
 
 function isTableData(data: RecordDataType): data is TableData {
   return (
-    typeof data.name === "string" &&
-    typeof data.address === "string" &&
-    typeof data.memo === "string" &&
-    typeof data.registeredAt === "string" &&
-    typeof data.job === "string" &&
-    typeof data.emailAgreed === "boolean"
+    "name" in data &&
+    "address" in data &&
+    "memo" in data &&
+    "registeredAt" in data &&
+    "job" in data &&
+    "emailAgreed" in data
   );
 }
 
