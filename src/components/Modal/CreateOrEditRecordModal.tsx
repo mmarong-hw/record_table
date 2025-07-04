@@ -5,11 +5,11 @@ import { useMemo } from "react";
 import type { FormValueType } from "../RecordForm/formValueType";
 import type { Dayjs } from "dayjs";
 
-interface Props {
+export interface Props {
   open: boolean;
   type: "create" | "edit";
   onClose: () => void;
-  onSubmit?: (values: any) => void;
+  onSubmit?: (values: FormValueType) => void;
 }
 
 export function CreateOrEditRecordModal({ open, onClose, onSubmit }: Props) {

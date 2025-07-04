@@ -1,13 +1,24 @@
 import { useState } from "react";
 import { Button } from "antd";
-import { CreateOrEditRecordModal } from "./Modal/CreateOrEditRecordModal";
+import { CreateOrEditRecordModal, type Props as CreateOrEditRecordModalProps } from "./Modal/CreateOrEditRecordModal";
 import { PlusOutlined } from "@ant-design/icons";
+import { useRecordContext } from "./Provider/RecordProvider";
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const { addRecord } = useRecordContext();
 
   const handleOpen = () => {
     setOpen(true);
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+  }
+
+  const handleSubmit: CreateOrEditRecordModalProps["onSubmit"] = (values) => {
+    addRecord(values);
+    setOpen(false);
   }
 
   return (
@@ -20,11 +31,12 @@ export function Header() {
           추가
         </Button>
       </header>
-      <CreateOrEditRecordModal open={open} type="create" onClose={() => {
-        setOpen(false);
-      }} onSubmit={(values) => {
-        console.log(values);
-      }} />
+      <CreateOrEditRecordModal
+        open={open}
+        type="create"
+        onClose={handleClose}
+        onSubmit={handleSubmit}
+      />
     </>
   )
 }
